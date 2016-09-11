@@ -1,0 +1,22 @@
+yum install php53
+yum install php53-cli
+yum install php53-common
+yum install php53-devel
+yum install php53-gd
+yum install php53-mbstring
+yum install php53-mysql
+yum install php53-pdo
+yum install php53-soap
+yum install php53-xml
+ yum install php-peer
+php-pdo-5.3.3-27.el6_5.1.i686
+php-mbstring-5.3.3-27.el6_5.1.i686
+php-gd-5.3.3-27.el6_5.1.i686
+php-5.3.3-27.el6_5.1.i686
+php-devel-5.3.3-27.el6_5.1.i686
+php-soap-5.3.3-27.el6_5.1.i686
+php-common-5.3.3-27.el6_5.1.i686
+php-mysql-5.3.3-27.el6_5.1.i686
+php-xml-5.3.3-27.el6_5.1.i686
+php-cli-5.3.3-27.el6_5.1.i686
+php-pear-1.9.4-4.el6.noarch
