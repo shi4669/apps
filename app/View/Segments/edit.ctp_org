@@ -1,0 +1,27 @@
+<div class="segments form">
+<?php echo $this->Form->create('Segment');?>
+	<fieldset>
+		<legend><?php echo __('Edit Segment'); ?></legend>
+	<?php
+		echo $this->Form->input('id');
+		echo $this->Form->input('segment_name');
+		echo $this->Form->input('segment_owner_id');
+		echo $this->Form->input('segment_status_id');
+		echo $this->Form->input('segment_div_id');
+		echo $this->Form->input('segment_source_device');
+		echo $this->Form->input('segment_status_date');
+		echo $this->Form->input('memo');
+		echo $this->Form->input('created_id');
+		echo $this->Form->input('updated_id');
+	?>
+	</fieldset>
+<?php echo $this->Form->end(__('Submit'));?>
+</div>
+<div class="actions">
+	<h3><?php echo __('Actions'); ?></h3>
+	<ul>
+
+		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('Segment.id')), null, __('Are you sure you want to delete # %s?', $this->Form->value('Segment.id'))); ?></li>
+		<li><?php echo $this->Html->link(__('List Segments'), array('action' => 'index'));?></li>
+	</ul>
+</div>
