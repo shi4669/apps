@@ -1,19 +1,36 @@
 <div class="deviceCategories form">
 <?php echo $this->Form->create('DeviceCategory');?>
 	<fieldset>
-		<legend><?php echo __('Edit Device Category'); ?></legend>
-	<?php
-		echo $this->Form->input('id');
-		echo $this->Form->input('device_name');
-	?>
+		 <legend><?php echo __('機器種別 新規登録'); ?></legend>
 	</fieldset>
-<?php echo $this->Form->end(__('Submit'));?>
+	<div class="control-group">
+	<?php
+	 		echo $this->Form->label(
+				'device_name',
+				'<font color="red">*</font> 機器種別',
+				array('class' => 'control-label', 'for' => 'device_name')
+			);
+			echo $this->Form->input(
+				'device_name',
+				array('label' => false,  'style' => 'width:300px', 'div' => array('class' => 'controls'))
+			);
+	?>
+	</div>
+	</fieldset>
+	<font color="red">*</font> がついている項目はかならず入力してください。
 </div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
+	<div class="form-actions">
+	<?php
+		echo $this->Form->button('登録', array('class' => 'btn btn-primary'));
+		echo $this->Html->link(
+			__('キャンセル'),
+			array('action' => 'index'),
+			array('class' => 'btn')
+		);
+	?>
+	</div>
+	<?php
+		echo $this->Form->end();
+	?>
+				
 
-		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('DeviceCategory.id')), null, __('Are you sure you want to delete # %s?', $this->Form->value('DeviceCategory.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Device Categories'), array('action' => 'index'));?></li>
-	</ul>
-</div>

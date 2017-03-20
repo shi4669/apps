@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('TextHelper', 'Text');
 /**
  * Todos Controller
  *
@@ -13,6 +14,8 @@ class TodosController extends AppController {
  * @var string
  */
 	public $name = 'Todos';
+
+	var $helpers = array('Text');
 	
 /**
  * Use Model
@@ -41,7 +44,6 @@ class TodosController extends AppController {
 		$tododate_start = null;
 		$tododate_end = null;
 		$created_id = null;		
-//		$this->set('todos', $this->paginate());
 
 		/** リクエストデータがある場合、ページ以外のパラメータがある場合は検索処理 */		
 		if (!empty($this->data) || count($this->passedArgs) > 1) {
@@ -137,6 +139,7 @@ class TodosController extends AppController {
 					/** 検索内容のクリア */
 					$this->redirect(array('action' => 'index'));
 			}
+
 				
 		}
 
@@ -153,7 +156,7 @@ class TodosController extends AppController {
 		$todo_category_id = $this->TodoCategory->find('all');
 		/** 11プルダウン用にデータを整える */
 		$todo_category_id = Set::Combine($todo_category_id, '{n}.TodoCategory.id', '{n}.TodoCategory.todo_category_name');
-
+		$todo_category_id = '2';
 				/** 業務区分を取得する */
 		$todo_progress_id = $this->TodoProgress->find('all');
 		/** 11プルダウン用にデータを整える */
@@ -239,14 +242,14 @@ class TodosController extends AppController {
 			)
 		);
 		$updated_id_name = $user_full_name[0]['User']['user_full_name'];
-
 		
 		/** Viewに値を渡す */
 		$this->set('task_category', $task_category);
 		$this->set('todo_category', $todo_category);
 		$this->set('todo_progress', $todo_progress);				
 		$this->set('created_id_name', $created_id_name);
-		$this->set('updated_id_name', $updated_id_name);		
+		$this->set('updated_id_name', $updated_id_name);
+		
 	}
 
 /**

@@ -41,8 +41,10 @@ class MonitorDeviceCategoriesController extends AppController {
 		if ($this->request->is('post')) {
 			$this->MonitorDeviceCategory->create();
 			if ($this->MonitorDeviceCategory->save($this->request->data)) {
-				$this->flash(__('Monitordevicecategory saved.'), array('action' => 'index'));
+				$this->Session->setFlash(__('監視機器の登録に成功しました。'), 'Flash/success');
+				$this->redirect(array('action' => 'index'));				
 			} else {
+				$this->Session->setFlash(__('監視機器の登録に失敗しました。'));																				
 			}
 		}
 	}
@@ -60,8 +62,10 @@ class MonitorDeviceCategoriesController extends AppController {
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->MonitorDeviceCategory->save($this->request->data)) {
-				$this->flash(__('The monitor device category has been saved.'), array('action' => 'index'));
+				$this->Session->setFlash(__('監視機器の更新に成功しました。'), 'Flash/success');
+				$this->redirect(array('action' => 'index'));				
 			} else {
+				$this->Session->setFlash(__('監視機器の更新に失敗しました。'));				
 			}
 		} else {
 			$this->request->data = $this->MonitorDeviceCategory->read(null, $id);
@@ -83,7 +87,8 @@ class MonitorDeviceCategoriesController extends AppController {
 			throw new NotFoundException(__('Invalid monitor device category'));
 		}
 		if ($this->MonitorDeviceCategory->delete()) {
-			$this->flash(__('Monitor device category deleted'), array('action' => 'index'));
+			$this->Session->setFlash(__('監視機器 の削除が完了しました。'));
+			$this->redirect(array('action' => 'index'));			
 		}
 		$this->flash(__('Monitor device category was not deleted'), array('action' => 'index'));
 		$this->redirect(array('action' => 'index'));

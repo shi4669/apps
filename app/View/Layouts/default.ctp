@@ -90,6 +90,22 @@ $cakeDescription = __d('cake_dev', '業務支援サイト');
 								<li><?php echo $this->Html->link(__('ソフトウェア一覧'), array('controller' => 'softwares', 'action' => 'index')); ?></li>
 							</ul>
 						</li>
+						<li class="dropdown" id="menu5">
+							<a class="dropdown-toggle" data-toggle="dropdown" href="#menu5">
+								IPアドレス管理
+								<b class="caret"></b>
+							</a>
+							<ul class="dropdown-menu">
+								<li><?php echo $this->Html->link(__('IPアドレス'), array('controller' => 'ipaddresses', 'action' => 'index')); ?></li>
+								<li><?php echo $this->Html->link(__('　機器種別'), array('controller' => 'deviceCategories', 'action' => 'index')); ?></li>
+								<li><?php echo $this->Html->link(__('　IP種別'), array('controller' => 'ipDivCategories', 'action' => 'index')); ?></li>
+								<li><?php echo $this->Html->link(__('　IP割当状態'), array('controller' => 'ipStatusCategories', 'action' => 'index')); ?></li>
+								<li><?php echo $this->Html->link(__('　IP監視機器'), array('controller' => 'monitorDeviceCategories', 'action' => 'index')); ?></li>
+								<li><?php echo $this->Html->link(__('　IP応答性'), array('controller' => 'icmpDivCategories', 'action' => 'index')); ?></li>
+								<li><?php echo $this->Html->link(__('セグメント'), array('controller' => 'segments', 'action' => 'index')); ?></li>
+								<li><?php echo $this->Html->link(__('ロケーション'), array('controller' => 'locations', 'action' => 'index')); ?></li>
+							</ul>
+						</li>
 						<li class="dropdown" id="menu0">
 							<a class="dropdown-toggle" data-toggle="dropdown" href="#menu0">
 								マスタ情報

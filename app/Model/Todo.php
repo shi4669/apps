@@ -6,7 +6,7 @@ App::uses('AppModel', 'Model');
  */
 class Todo extends AppModel {
 
-	public $order = array('Todo.todo_date asc');
+	public $order = array('Todo.task_category_id,Todo.todo_date asc');
 
  /* belongsTo associations
  *

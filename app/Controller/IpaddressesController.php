@@ -245,12 +245,53 @@ class IpaddressesController extends AppController {
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->Ipaddress->save($this->request->data)) {
-				$this->flash(__('The ipaddress has been saved.'), array('action' => 'index'));
+				$this->Session->setFlash(__('IPアドレスの更新が完了しました。'), 'Flash/success');
+				$this->redirect(array('action' => 'index'));				
 			} else {
+				$this->Session->setFlash(__('IPアドレスの更新が失敗しました。'));				
 			}
 		} else {
 			$this->request->data = $this->Ipaddress->read(null, $id);
 		}
+
+		/** セグメントステータス区分区分を取得する */
+		$segment_id = $this->Segment->find('all');
+		/** プルダウン用にデータを整える */
+		$segment_id = Set::Combine($segment_id, '{n}.Segment.id', '{n}.Segment.segment_name');
+
+		/** IPアドレス区分を取得する */
+		$ip_div_id = $this->IpDivCategory->find('all');
+		/** プルダウン用にデータを整える */
+		$ip_div_id = Set::Combine($ip_div_id, '{n}.IpDivCategory.id', '{n}.IpDivCategory.ip_div_name');
+
+		/** PING応答を取得する */
+		$icmp_div_id = $this->IcmpDivCategory->find('all');
+		/** プルダウン用にデータを整える */
+		$icmp_div_id = Set::Combine($icmp_div_id, '{n}.IcmpDivCategory.id', '{n}.IcmpDivCategory.icmp_div_name');
+
+		/** IPステータスを取得する */
+		$ip_status_id = $this->IpStatusCategory->find('all');
+		/** プルダウン用にデータを整える */
+		$ip_status_id = Set::Combine($ip_status_id, '{n}.IpStatusCategory.id', '{n}.IpStatusCategory.ip_status_name');
+
+		/** 監視機器を取得する */
+		$mointor_device_id = $this->MonitorDeviceCategory->find('all');
+		/** プルダウン用にデータを整える */
+		$mointor_device_id = Set::Combine($mointor_device_id, '{n}.MonitorDeviceCategory.id', '{n}.MonitorDeviceCategory.monitor_device_name');
+
+		/** 監視機器を取得する */
+		$device_category_id = $this->DeviceCategory->find('all');
+		/** プルダウン用にデータを整える */
+		$device_category_id = Set::Combine($device_category_id, '{n}.DeviceCategory.id', '{n}.DeviceCategory.device_name');
+				
+		$this->set('segment_id', $segment_id);
+		$this->set('ip_div_id', $ip_div_id);
+		$this->set('icmp_div_id', $icmp_div_id);
+		$this->set('ip_status_id', $ip_status_id);
+		$this->set('mointor_device_id', $mointor_device_id);
+		$this->set('device_category_id', $device_category_id);		
+		
+		
 	}
 
 /**
@@ -273,4 +314,145 @@ class IpaddressesController extends AppController {
 		$this->flash(__('Ipaddress was not deleted'), array('action' => 'index'));
 		$this->redirect(array('action' => 'index'));
 	}
+
+/**
+ * bulkDelete method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function bulkDelete() {
+
+		if ($this->request->is('post')) {			   
+			//セグメントID
+			$segment_id = $this->request->data['Ipaddress']['segment_id'];
+
+//			if (!$this->Ipaddress->exists(array('Ipaddress.segment_id' => $segment_id))) {
+//				$this->Session->setFlash(__('一括削除の対象データがありませんでした。。'));
+//				$this->redirect(array('action' => 'index'));				
+//			}
+			if ($this->Ipaddress->deleteAll(array('Ipaddress.segment_id' => $segment_id))) {
+				$count = $this->Ipaddress->getAffectedRows();
+				$this->Session->setFlash(__('IPアドレスデータの一括削除が完了しました。削除件数：' . $count), 'Flash/success');
+				
+				$this->redirect(array('action' => 'index'));				
+			} else {
+				$this->Session->setFlash(__('IPアドレスデータの一括削除が失敗しました。'));
+				$this->redirect(array('action' => 'index'));
+			}
+		}
+
+
+		
+		/** セグメントステータス区分区分を取得する */
+		$segment_id = $this->Segment->find('all');
+		/** プルダウン用にデータを整える */
+		$segment_id = Set::Combine($segment_id, '{n}.Segment.id', '{n}.Segment.segment_name');
+//		$this->set('segment_id',$this->Segment->find('list'));
+
+		// ビュー画面用セレクトデータの取得(セグメント名＋ＩＰ表示する仮想フィールド）
+		$this->Segment->virtualFields = array(
+			                    'segment_name_ip' => "CONCAT(Segment.segment_name, ' - [', segment_ipaddress,']')"
+		);
+
+		$params = array(
+			'fields' => array('Segment.segment_name_ip')
+		);
+
+		$segment_id = $this->Segment->find('list', $params);
+		$this->set("segment_id", $segment_id);   // ビューへのデータ引渡し
+			   
+	}
+
+	
+/**
+ * bulkImport method
+ *
+ * @param string $id
+ * @return void
+ */
+	public function bulkImport() {
+
+		if ($this->request->is('post')) {
+
+			//インポート件数
+			$import_no = 0;
+
+			//入力項目の取得
+			//台数の取得
+			$lot = $this->request->data['Ipaddress']['lot'];
+			//開始のIPアドレス
+			$start_address = $this->request->data['Ipaddress']['start_address'];
+			//セグメントID
+			$segment_id = $this->request->data['Ipaddress']['segment_id'];
+
+			$created_id = Configure::read('logged_user_id');;
+			$updated_id = Configure::read('logged_user_id');;
+			
+			//IPアドレスを.区切りで取得(IP V4想定）第４オクテットまでそれぞれのオクテットの値を配列に取得
+			$target_segemnt = split('\.', strval($start_address));
+			//第三オクテットまでの値を改めて設定（例：「192.168.1.」までを設定）
+			$segment = strval($target_segemnt[0]) . "." . strval($target_segemnt[1]) . "." . strval($target_segemnt[2]) . ".";
+			//開始アドレスの第四オクテットを取得
+			$start_address_fourth_octet = $target_segemnt[3];
+			
+			for($i = 0; $i < $lot; $i++){
+
+				//インポート件数をカウントアップ
+				$import_no = $import_no + 1;
+				
+				//１件目は開始アドレスをそのまま設定
+				if ( $import_no == 1 ) {
+					$import_no = $start_address_fourth_octet;
+				}
+				$ipaddress = $segment . strval($import_no);
+			 	$data = array('ipaddress' => $ipaddress ,
+							  'segment_id' => $segment_id,
+							  'ip_status_id' => '1',
+							  'device_category_id' => '1',
+							  'ip_div_id' => '1',
+							  'icmp_div_id' => '1',
+							  'mointor_device_id' => '1',
+							  'created_id' => $created_id,
+							  'updated_id' => $updated_id,
+				);
+				
+				$this->Ipaddress->create();
+				if ($this->Ipaddress->save($data)) {
+///					$this->Session->setFlash(__('IPアドレスの新規登録が完了しました。'), 'Flash/success');
+//					$this->redirect(array('action' => 'index'));				
+				} else {
+					$this->Session->setFlash(__('IPアドレスの新規登録が失敗しました。'));				
+				}
+			}
+			
+
+		}
+			   
+		/** セグメントステータス区分区分を取得する */
+		$segment_id = $this->Segment->find('all');
+		/** プルダウン用にデータを整える */
+		$segment_id = Set::Combine($segment_id, '{n}.Segment.id', '{n}.Segment.segment_name');
+//		$this->set('segment_id',$this->Segment->find('list'));
+
+		// ビュー画面用セレクトデータの取得(セグメント名＋ＩＰ表示する仮想フィールド）
+		$this->Segment->virtualFields = array(
+			                    'segment_name_ip' => "CONCAT(Segment.segment_name, ' - [', segment_ipaddress,']')"
+		);
+
+		$params = array(
+			'fields' => array('Segment.segment_name_ip')
+		);
+
+		$segment_id = $this->Segment->find('list', $params);
+		$this->set("segment_id", $segment_id);   // ビューへのデータ引渡し
+		
+		//$this->set('segment_id',$this->Segment->find('list'),array('fields'=>array('id','segment_name')));
+		
+//		$this->set('segment_id', $segment_id);			   
+	}
+
+	
 }
+
+

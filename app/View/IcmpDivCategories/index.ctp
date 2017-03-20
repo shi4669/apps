@@ -1,20 +1,38 @@
 <div class="icmpDivCategories index">
-	<h2><?php echo __('Icmp Div Categories');?></h2>
+	<h2><?php echo __('IP応答性(Ping応答)');?></h2>
+
+	<div class="pull-right">
+		<?php
+			echo $this->Html->link(
+				__('新規登録'),
+				array(
+					'action' => 'add'
+				),
+				array('class' => 'btn btn-primary btn-small')
+			);
+		?>
+
+	</div>
+	<br>
+	<br>
+
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id');?></th>
-			<th><?php echo $this->Paginator->sort('icmp_div_name');?></th>
-			<th class="actions"><?php echo __('Actions');?></th>
+			<th><?php echo $this->Paginator->sort('IP応答性(Ping応答)');?></th>
+			<th><?php echo $this->Paginator->sort('更新者');?></th>
+			<th><?php echo $this->Paginator->sort('最終更新日');?></th>
 	</tr>
 	<?php
 	foreach ($icmpDivCategories as $icmpDivCategory): ?>
 	<tr>
 		<td><?php echo h($icmpDivCategory['IcmpDivCategory']['id']); ?>&nbsp;</td>
 		<td><?php echo h($icmpDivCategory['IcmpDivCategory']['icmp_div_name']); ?>&nbsp;</td>
+		<td><?php echo h($icmpDivCategory['User']['user_full_name']); ?>&nbsp;</td>
+		<td><?php echo h($icmpDivCategory['IcmpDivCategory']['modified']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $icmpDivCategory['IcmpDivCategory']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $icmpDivCategory['IcmpDivCategory']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $icmpDivCategory['IcmpDivCategory']['id']), null, __('Are you sure you want to delete # %s?', $icmpDivCategory['IcmpDivCategory']['id'])); ?>
+			<?php echo $this->Html->link(__('更新'), array('action' => 'edit', $icmpDivCategory['IcmpDivCategory']['id']),array('class' => 'btn btn-primary btn-small')); ?>	 
+            <?php  echo $this->Form->postLink(__('削除'), array('action' => 'delete', $icmpDivCategory['IcmpDivCategory']['id']),array('class' => 'btn btn-primary btn-small'), __('削除してもよろいですか # %s?', $icmpDivCategory['IcmpDivCategory']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -34,9 +52,4 @@
 	?>
 	</div>
 </div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New Icmp Div Category'), array('action' => 'add')); ?></li>
-	</ul>
-</div>
+

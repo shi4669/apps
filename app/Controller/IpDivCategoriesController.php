@@ -41,8 +41,10 @@ class IpDivCategoriesController extends AppController {
 		if ($this->request->is('post')) {
 			$this->IpDivCategory->create();
 			if ($this->IpDivCategory->save($this->request->data)) {
-				$this->flash(__('Ipdivcategory saved.'), array('action' => 'index'));
+				$this->Session->setFlash(__('IP種別の登録に成功しました。'), 'Flash/success');
+				$this->redirect(array('action' => 'index'));																
 			} else {
+				$this->Session->setFlash(__('IP種別の登録に失敗しました。'));																
 			}
 		}
 	}
@@ -60,8 +62,10 @@ class IpDivCategoriesController extends AppController {
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->IpDivCategory->save($this->request->data)) {
-				$this->flash(__('The ip div category has been saved.'), array('action' => 'index'));
+				$this->Session->setFlash(__('IP種別の更新に成功しました。'), 'Flash/success');
+				$this->redirect(array('action' => 'index'));																				
 			} else {
+				$this->Session->setFlash(__('IP種別の更新に失敗しました。'));																				
 			}
 		} else {
 			$this->request->data = $this->IpDivCategory->read(null, $id);
@@ -83,7 +87,8 @@ class IpDivCategoriesController extends AppController {
 			throw new NotFoundException(__('Invalid ip div category'));
 		}
 		if ($this->IpDivCategory->delete()) {
-			$this->flash(__('Ip div category deleted'), array('action' => 'index'));
+			$this->Session->setFlash(__('IP種別 の削除が完了しました。'));
+			$this->redirect(array('action' => 'index'));			
 		}
 		$this->flash(__('Ip div category was not deleted'), array('action' => 'index'));
 		$this->redirect(array('action' => 'index'));

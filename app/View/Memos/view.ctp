@@ -43,13 +43,24 @@
 
 	<p class="bg-primary"><h4>メモ本文</h4></p>
 	<p style="background-color:#E6E6FA;border:1px dotted #CCCCCC;padding:5px; overflow:auto;">
-		<?php echo nl2br(h($memo['Memo']['memo'])); ?>
+
+	<?php
+		//$text = 'CakePHPはPHP用の高速開発フレームワークです。http://cakephp.jp/ アプリケーションの開発、メンテナンス、インストールのための拡張性の高い仕組みを提供します。';
+	 	$text = $memo['Memo']['memo'];
+		echo nl2br($this->Text->autoLinkUrls($text, array( 'target' => '_blank')));
+	?>   
+	</p>	 
 	</p>
 
 	 <br><br>
 	<p class="bg-primary"><h4>補足情報</h4></p>
 
-		<?php echo nl2br(h($memo['Memo']['memo2'])); ?>
+	<?php
+		//$text = 'CakePHPはPHP用の高速開発フレームワークです。http://cakephp.jp/ アプリケーションの開発、メンテナンス、インストールのための拡張性の高い仕組みを提供します。';
+	 	$text2 = $memo['Memo']['memo2'];
+		echo nl2br($this->Text->autoLinkUrls($text2, array( 'target' => '_blank')));
+	?>   
+	</p>			
 	</p>
 
 	 <br><br>

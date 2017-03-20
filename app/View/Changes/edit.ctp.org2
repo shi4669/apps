@@ -1,7 +1,7 @@
 <div class="changes form">
 <?php echo $this->Form->create('Change', array('class' => 'form-horizontal'));?>
 	<fieldset>
-		<legend><?php echo __('システム変更履歴 新規登録'); ?></legend>
+		<legend><?php echo __('システム変更履歴 更新'); ?></legend>
 
 		<div class="control-group">
 		<?php
@@ -48,20 +48,6 @@
 		?>
 		</div>
 
-		<div class="control-group">
-		<?php
-			/** 対象機器名 */
-			echo $this->Form->label(
-				'change_target_mng_no',
-				' 対象機器管理番号',
-				array('class' => 'control-label', 'for' => 'change_target_mng_no')
-			);
-			echo $this->Form->input(
-				'change_target_mng_no',
-				array('label' => false, 'class' => 'input-xlarge', 'div' => array('class' => 'controls'))
-			);
-		?>
-		</div>
 
 		<div class="control-group">
 		<?php
@@ -93,16 +79,16 @@
 		<?php
 			/** 作業区分 */
 			echo $this->Form->label(
-				'change_div_id',
+				'change_div',
 				'<font color="red">*</font> 作業区分',
-				array('class' => 'control-label', 'for' => 'change_div_id')
+				array('class' => 'control-label', 'for' => 'change_div')
 			);
 			echo $this->Form->input(
-				'change_div_id',
+				'change_div',
 				array(
 					'label' => false,
 					'type' => 'select',
-					'options' => $change_div_id,
+					'options' => $change_divs,
 					'empty' => '- 選択してください -',
 					'class' => 'input-xlarge',
 					'div' => array('class' => 'controls')
@@ -115,16 +101,16 @@
 		<?php
 			/** 作業状況 */
 			echo $this->Form->label(
-				'change_status_id',
+				'change_status',
 				'<font color="red">*</font> 作業状況',
-				array('class' => 'control-label', 'for' => 'change_status_id')
+				array('class' => 'control-label', 'for' => 'change_status')
 			);
 			echo $this->Form->input(
-				'change_status_id',
+				'change_status',
 				array(
 					'label' => false,
 					'type' => 'select',
-					'options' => $change_status_id,
+					'options' => $change_status,
 					'empty' => '- 選択してください -',
 					'class' => 'input-xlarge',
 					'div' => array('class' => 'controls')
@@ -168,12 +154,12 @@
 		<?php
 			/** 資料変更区分 */
 			echo $this->Form->label(
-				'service_affect_id',
+				'service_affect',
 				'<font color="red">*</font> サービス停止の有無',
-				array('class' => 'control-label', 'for' => 'service_affect_id')
+				array('class' => 'control-label', 'for' => 'service_affect')
 			);
 			echo $this->Form->input(
-				'service_affect_id',
+				'service_affect',
 				array(
 					'label' => false,
 					'type' => 'select',
@@ -204,12 +190,12 @@
 		<?php
 			/** 資料変更区分 */
 			echo $this->Form->label(
-				'change_doc_id',
+				'change_doc_div',
 				'<font color="red">*</font> 資料の更新有無',
-				array('class' => 'control-label', 'for' => 'change_doc_id')
+				array('class' => 'control-label', 'for' => 'change_doc_div')
 			);
 			echo $this->Form->input(
-				'change_doc_id',
+				'change_doc_div',
 				array(
 					'label' => false,
 					'type' => 'select',
@@ -243,12 +229,12 @@
 		<?php
 			/** 資料変更区分 */
 			echo $this->Form->label(
-				'shared_div_id',
+				'shared_div',
 				'<font color="red">*</font> 周知情報の有無',
-				array('class' => 'control-label', 'for' => 'shared_div_id')
+				array('class' => 'control-label', 'for' => 'shared_div')
 			);
 			echo $this->Form->input(
-				'shared_div_id',
+				'shared_div',
 				array(
 					'label' => false,
 					'type' => 'select',
@@ -296,7 +282,7 @@
 
 	<div class="form-actions">
 	<?php
-		echo $this->Form->button('登録', array('class' => 'btn btn-primary'));
+		echo $this->Form->button('更新', array('class' => 'btn btn-primary'));
 		echo $this->Html->link(
 			__('キャンセル'),
 			array('action' => 'index'),

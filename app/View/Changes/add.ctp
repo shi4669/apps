@@ -42,7 +42,22 @@
 				array('class' => 'control-label', 'for' => 'change_target_detail')
 			);
 			echo $this->Form->input(
-				'change_target_deail',
+				'change_target_detail',
+				array('label' => false, 'class' => 'input-xlarge', 'div' => array('class' => 'controls'))
+			);
+		?>
+		</div>
+
+		<div class="control-group">
+		<?php
+			/** 対象機器名 */
+			echo $this->Form->label(
+				'change_target_mng_no',
+				' 対象機器管理番号',
+				array('class' => 'control-label', 'for' => 'change_target_mng_no')
+			);
+			echo $this->Form->input(
+				'change_target_mng_no',
 				array('label' => false, 'class' => 'input-xlarge', 'div' => array('class' => 'controls'))
 			);
 		?>
@@ -79,16 +94,16 @@
 		<?php
 			/** 作業区分 */
 			echo $this->Form->label(
-				'change_div',
+				'change_div_id',
 				'<font color="red">*</font> 作業区分',
-				array('class' => 'control-label', 'for' => 'change_div')
+				array('class' => 'control-label', 'for' => 'change_div_id')
 			);
 			echo $this->Form->input(
-				'change_div',
+				'change_div_id',
 				array(
 					'label' => false,
 					'type' => 'select',
-					'options' => $change_divs,
+					'options' => $change_div_id,
 					'empty' => '- 選択してください -',
 					'class' => 'input-xlarge',
 					'div' => array('class' => 'controls')
@@ -101,16 +116,16 @@
 		<?php
 			/** 作業状況 */
 			echo $this->Form->label(
-				'change_status',
+				'change_status_id',
 				'<font color="red">*</font> 作業状況',
-				array('class' => 'control-label', 'for' => 'change_status')
+				array('class' => 'control-label', 'for' => 'change_status_id')
 			);
 			echo $this->Form->input(
-				'change_status',
+				'change_status_id',
 				array(
 					'label' => false,
 					'type' => 'select',
-					'options' => $change_status,
+					'options' => $change_status_id,
 					'empty' => '- 選択してください -',
 					'class' => 'input-xlarge',
 					'div' => array('class' => 'controls')
@@ -154,12 +169,12 @@
 		<?php
 			/** 資料変更区分 */
 			echo $this->Form->label(
-				'service_affect',
+				'service_affect_id',
 				'<font color="red">*</font> サービス停止の有無',
-				array('class' => 'control-label', 'for' => 'service_affect')
+				array('class' => 'control-label', 'for' => 'service_affect_id')
 			);
 			echo $this->Form->input(
-				'service_affect',
+				'service_affect_id',
 				array(
 					'label' => false,
 					'type' => 'select',
@@ -190,12 +205,12 @@
 		<?php
 			/** 資料変更区分 */
 			echo $this->Form->label(
-				'change_doc_div',
+				'change_doc_id',
 				'<font color="red">*</font> 資料の更新有無',
-				array('class' => 'control-label', 'for' => 'change_doc_div')
+				array('class' => 'control-label', 'for' => 'change_doc_id')
 			);
 			echo $this->Form->input(
-				'change_doc_div',
+				'change_doc_id',
 				array(
 					'label' => false,
 					'type' => 'select',
@@ -229,12 +244,12 @@
 		<?php
 			/** 資料変更区分 */
 			echo $this->Form->label(
-				'shared_div',
+				'shared_div_id',
 				'<font color="red">*</font> 周知情報の有無',
-				array('class' => 'control-label', 'for' => 'shared_div')
+				array('class' => 'control-label', 'for' => 'shared_div_id')
 			);
 			echo $this->Form->input(
-				'shared_div',
+				'shared_div_id',
 				array(
 					'label' => false,
 					'type' => 'select',

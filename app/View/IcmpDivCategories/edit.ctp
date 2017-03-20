@@ -1,19 +1,36 @@
 <div class="icmpDivCategories form">
 <?php echo $this->Form->create('IcmpDivCategory');?>
 	<fieldset>
-		<legend><?php echo __('Edit Icmp Div Category'); ?></legend>
-	<?php
-		echo $this->Form->input('id');
-		echo $this->Form->input('icmp_div_name');
-	?>
-	</fieldset>
-<?php echo $this->Form->end(__('Submit'));?>
-</div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
+		 <legend><?php echo __('IP応答性(Ping応答) 新規登録'); ?></legend>
 
-		<li><?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $this->Form->value('IcmpDivCategory.id')), null, __('Are you sure you want to delete # %s?', $this->Form->value('IcmpDivCategory.id'))); ?></li>
-		<li><?php echo $this->Html->link(__('List Icmp Div Categories'), array('action' => 'index'));?></li>
-	</ul>
+	<div class="control-group">
+	<?php
+	 		echo $this->Form->label(
+				'icmp_div_name',
+				'<font color="red">*</font> IP応答性(Ping応答)',
+				array('class' => 'control-label', 'for' => 'icmp_div_name')
+			);
+			echo $this->Form->input(
+				'icmp_div_name',
+				array('label' => false,  'style' => 'width:300px', 'div' => array('class' => 'controls'))
+			);
+	?>
+	</div>
+	</fieldset>
+	<font color="red">*</font> がついている項目はかならず入力してください。
 </div>
+	<div class="form-actions">
+	<?php
+		echo $this->Form->button('登録', array('class' => 'btn btn-primary'));
+		echo $this->Html->link(
+			__('キャンセル'),
+			array('action' => 'index'),
+			array('class' => 'btn')
+		);
+	?>
+	</div>
+	<?php
+		echo $this->Form->end();
+	?>
+
+

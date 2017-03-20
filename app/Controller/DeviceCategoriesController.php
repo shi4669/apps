@@ -41,8 +41,10 @@ class DeviceCategoriesController extends AppController {
 		if ($this->request->is('post')) {
 			$this->DeviceCategory->create();
 			if ($this->DeviceCategory->save($this->request->data)) {
-				$this->flash(__('Devicecategory saved.'), array('action' => 'index'));
+				$this->Session->setFlash(__('機器種別の登録に成功しました。'), 'Flash/success');
+				$this->redirect(array('action' => 'index'));				
 			} else {
+				$this->Session->setFlash(__('機器種別の登録に失敗しました。'));				
 			}
 		}
 	}
@@ -60,8 +62,10 @@ class DeviceCategoriesController extends AppController {
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->DeviceCategory->save($this->request->data)) {
-				$this->flash(__('The device category has been saved.'), array('action' => 'index'));
+				$this->Session->setFlash(__('機器種別の更新に成功しました。'), 'Flash/success');
+				$this->redirect(array('action' => 'index'));
 			} else {
+				$this->Session->setFlash(__('機器種別の更新に失敗しました。'));				
 			}
 		} else {
 			$this->request->data = $this->DeviceCategory->read(null, $id);
@@ -83,7 +87,8 @@ class DeviceCategoriesController extends AppController {
 			throw new NotFoundException(__('Invalid device category'));
 		}
 		if ($this->DeviceCategory->delete()) {
-			$this->flash(__('Device category deleted'), array('action' => 'index'));
+			$this->Session->setFlash(__('機器種別 の削除が完了しました。'));
+			$this->redirect(array('action' => 'index'));			
 		}
 		$this->flash(__('Device category was not deleted'), array('action' => 'index'));
 		$this->redirect(array('action' => 'index'));

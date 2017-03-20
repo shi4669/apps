@@ -41,8 +41,10 @@ class IcmpDivCategoriesController extends AppController {
 		if ($this->request->is('post')) {
 			$this->IcmpDivCategory->create();
 			if ($this->IcmpDivCategory->save($this->request->data)) {
-				$this->flash(__('Icmpdivcategory saved.'), array('action' => 'index'));
+				$this->Session->setFlash(__('IP応答性(Ping応答)の登録に成功しました。'), 'Flash/success');
+				$this->redirect(array('action' => 'index'));				
 			} else {
+				$this->Session->setFlash(__('IP応答性(Ping応答)の登録に失敗しました。'));				
 			}
 		}
 	}
@@ -60,8 +62,10 @@ class IcmpDivCategoriesController extends AppController {
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->IcmpDivCategory->save($this->request->data)) {
-				$this->flash(__('The icmp div category has been saved.'), array('action' => 'index'));
+				$this->Session->setFlash(__('IP応答性(Ping応答)の更新に成功しました。'), 'Flash/success');
+				$this->redirect(array('action' => 'index'));				
 			} else {
+				$this->Session->setFlash(__('IP応答性(Ping応答)の登録に失敗しました。'));				
 			}
 		} else {
 			$this->request->data = $this->IcmpDivCategory->read(null, $id);
@@ -83,7 +87,8 @@ class IcmpDivCategoriesController extends AppController {
 			throw new NotFoundException(__('Invalid icmp div category'));
 		}
 		if ($this->IcmpDivCategory->delete()) {
-			$this->flash(__('Icmp div category deleted'), array('action' => 'index'));
+			$this->Session->setFlash(__('IP応答性(Ping応答) の削除が完了しました。'));
+			$this->redirect(array('action' => 'index'));
 		}
 		$this->flash(__('Icmp div category was not deleted'), array('action' => 'index'));
 		$this->redirect(array('action' => 'index'));

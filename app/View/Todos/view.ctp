@@ -51,13 +51,21 @@
 
 	<p class="bg-primary"><h4>メモ本文</h4></p>
 	<p style="background-color:#E6E6FA;border:1px dotted #CCCCCC;padding:5px; overflow:auto;">
-		<?php echo nl2br(h($todo['Todo']['memo'])); ?>
+	<?php
+	 	$memo = $todo['Todo']['memo'];
+		echo nl2br($this->Text->autoLinkUrls($memo, array( 'target' => '_blank')));
+		//echo nl2br(h($this->Text->autoLinkUrls($memo)));
+	?>
 	</p>
 
 	 <br><br>
 	<p class="bg-primary"><h4>補足情報</h4></p>
-
-		<?php echo nl2br(h($todo['Todo']['memo2'])); ?>
+	<?php
+	 	$memo2 = $todo['Todo']['memo2'];
+		echo nl2br($this->Text->autoLinkUrls($memo2, array( 'target' => '_blank')));
+		//echo nl2br(h($this->Text->autoLinkUrls($memo)));
+	?>
+			
 	</p>
 
 	 <br><br>

@@ -1,20 +1,38 @@
 <div class="deviceCategories index">
-	<h2><?php echo __('Device Categories');?></h2>
+	<h2><?php echo __('機器種別一覧');?></h2>
+
+	<div class="pull-right">
+		<?php
+			echo $this->Html->link(
+				__('新規登録'),
+				array(
+					'action' => 'add'
+				),
+				array('class' => 'btn btn-primary btn-small')
+			);
+		?>
+
+	</div>
+	<br>
+	<br>
+
 	<table cellpadding="0" cellspacing="0">
 	<tr>
 			<th><?php echo $this->Paginator->sort('id');?></th>
-			<th><?php echo $this->Paginator->sort('device_name');?></th>
-			<th class="actions"><?php echo __('Actions');?></th>
+			<th><?php echo $this->Paginator->sort('機器種別');?></th>
+			<th><?php echo $this->Paginator->sort('更新者');?></th>
+			<th><?php echo $this->Paginator->sort('最終更新日');?></th>
 	</tr>
 	<?php
 	foreach ($deviceCategories as $deviceCategory): ?>
 	<tr>
 		<td><?php echo h($deviceCategory['DeviceCategory']['id']); ?>&nbsp;</td>
 		<td><?php echo h($deviceCategory['DeviceCategory']['device_name']); ?>&nbsp;</td>
+		<td><?php echo h($deviceCategory['User']['user_full_name']); ?>&nbsp;</td>
+		<td><?php echo h($deviceCategory['DeviceCategory']['modified']); ?>&nbsp;</td>
 		<td class="actions">
-			<?php echo $this->Html->link(__('View'), array('action' => 'view', $deviceCategory['DeviceCategory']['id'])); ?>
-			<?php echo $this->Html->link(__('Edit'), array('action' => 'edit', $deviceCategory['DeviceCategory']['id'])); ?>
-			<?php echo $this->Form->postLink(__('Delete'), array('action' => 'delete', $deviceCategory['DeviceCategory']['id']), null, __('Are you sure you want to delete # %s?', $deviceCategory['DeviceCategory']['id'])); ?>
+			<?php echo $this->Html->link(__('更新'), array('action' => 'edit', $deviceCategory['DeviceCategory']['id']),array('class' => 'btn btn-primary btn-small')); ?>	 
+            <?php  echo $this->Form->postLink(__('削除'), array('action' => 'delete', $deviceCategory['DeviceCategory']['id']),array('class' => 'btn btn-primary btn-small'), __('削除してもよろいですか # %s?', $deviceCategory['DeviceCategory']['id'])); ?>
 		</td>
 	</tr>
 <?php endforeach; ?>
@@ -34,9 +52,4 @@
 	?>
 	</div>
 </div>
-<div class="actions">
-	<h3><?php echo __('Actions'); ?></h3>
-	<ul>
-		<li><?php echo $this->Html->link(__('New Device Category'), array('action' => 'add')); ?></li>
-	</ul>
-</div>
+

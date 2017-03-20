@@ -1,6 +1,13 @@
 <div class="changes index">
 	<h2><?php echo __('システム変更履歴');?></h2>
 
+<?php
+
+header('Expires:');
+header('Cache-Control:');
+header('Pragma:');
+
+?>
 	<div>
 		<?php
 			/** 検索 */
@@ -11,47 +18,48 @@
 			<tr>
 				<td valign="top" style="padding-right:20px">
 					<?php
-						echo $this->Form->input('change_title', array('label'=>'作業名'));
+
 						echo $this->Form->input('change_target', array('label'=>'対象機器'));
+						echo $this->Form->input('change_title', array('label'=>'作業名'));
 						echo $this->Form->input(
-							'change_div',
+							'change_div_id',
 							array('label'=>'作業区分',
 								'type'=>'select',
 								'empty'=>'- 選択してください -',
-								'options'=>$change_divs)
+								'options'=>$change_div_id)
 							);
 						echo $this->Form->input(
-							'change_status',
+							'change_status_id',
 							array('label'=>'作業状況',
 								'type'=>'select',
 								'empty'=>'- 選択してください -',
-								'options'=>$change_status)
+								'options'=>$change_status_id)
 							);
 					?>
 				</td>
 				<td valign="top">
 					<?php
 						echo $this->Form->input(
-							'change_doc_div',
-							array('label'=>'資料の更新有無',
+							'service_affect_id',
+							array('label'=>'サービス影響',
 								'type'=>'select',
 								'empty'=>'- 選択してください -',
 								'options'=>$general_code)
 							);
 						echo $this->Form->input(
-							'shared_div',
+							'shared_div_id',
 							array('label'=>'周知情報の有無',
 								'type'=>'select',
 								'empty'=>'- 選択してください -',
 								'options'=>$general_code)
 							);
-						echo $this->Form->input('email', array('label'=>'メールアドレス'));
+						echo $this->Form->input('tag', array('label'=>'タグ'));
 						echo $this->Form->label(
-							'lasttrade',
-							'最終取引日'
+							'change_date',
+							'作業予定/完了日'
 						);
 						echo $this->Form->input(
-							'lasttrade_start',
+							'change_date_start',
 							array(
 								'label' => false,
 								'type' => 'date',
@@ -67,7 +75,7 @@
 						);
 						echo ' ～ ';
 						echo $this->Form->input(
-							'lasttrade_end',
+							'change_date_end',
 							array(
 								'label' => false,
 								'type' => 'date',

@@ -41,8 +41,10 @@ class IpStatusCategoriesController extends AppController {
 		if ($this->request->is('post')) {
 			$this->IpStatusCategory->create();
 			if ($this->IpStatusCategory->save($this->request->data)) {
-				$this->flash(__('Ipstatuscategory saved.'), array('action' => 'index'));
+				$this->Session->setFlash(__('IP割当状態の登録に成功しました。'), 'Flash/success');
+				$this->redirect(array('action' => 'index'));				
 			} else {
+				$this->Session->setFlash(__('IP割当状態の登録に失敗しました。'));				
 			}
 		}
 	}
@@ -60,8 +62,10 @@ class IpStatusCategoriesController extends AppController {
 		}
 		if ($this->request->is('post') || $this->request->is('put')) {
 			if ($this->IpStatusCategory->save($this->request->data)) {
-				$this->flash(__('The ip status category has been saved.'), array('action' => 'index'));
+				$this->Session->setFlash(__('IP割当状態の更新に成功しました。'), 'Flash/success');
+				$this->redirect(array('action' => 'index'));				
 			} else {
+				$this->Session->setFlash(__('IP割当状態の更新に失敗しました。'));				
 			}
 		} else {
 			$this->request->data = $this->IpStatusCategory->read(null, $id);
@@ -83,7 +87,8 @@ class IpStatusCategoriesController extends AppController {
 			throw new NotFoundException(__('Invalid ip status category'));
 		}
 		if ($this->IpStatusCategory->delete()) {
-			$this->flash(__('Ip status category deleted'), array('action' => 'index'));
+			$this->Session->setFlash(__('IP割当状態 の削除が完了しました。'));
+			$this->redirect(array('action' => 'index'));			
 		}
 		$this->flash(__('Ip status category was not deleted'), array('action' => 'index'));
 		$this->redirect(array('action' => 'index'));

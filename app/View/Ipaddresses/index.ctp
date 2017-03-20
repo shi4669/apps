@@ -112,19 +112,20 @@ header('Pragma:');
 	<div class="pull-right">
 		<?php
 			echo $this->Html->link(
-				__('新規登録'),
+				__('初期登録'),
 				array(
-					'action' => 'add'
+					'controller' => 'ipaddresses',
+					'action' => 'bulkImport'
 				),
 				array('class' => 'btn btn-primary btn-small')
 			);
 		?>
-		&nbsp;
 		<?php
 			echo $this->Html->link(
-				__('一括初期登録'),
+				__('一括削除'),
 				array(
-					'action' => 'add'
+					'controller' => 'ipaddresses',
+					'action' => 'bulkDelete'
 				),
 				array('class' => 'btn btn-primary btn-small')
 			);

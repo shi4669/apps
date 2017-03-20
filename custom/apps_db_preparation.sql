@@ -15,6 +15,161 @@ FLUSH PRIVILEGES;
 
 USE customer_management;
 
+-- セグメント情報（segments）の作成
+--
+CREATE TABLE `ipaddresses` (
+  `id` int(20) NOT NULL auto_increment,
+  `ipaddress` varchar(256) default NULL,
+  `segment_id` varchar(11) default NULL,
+  `ip_div_id` varchar(11) default NULL,
+  `icmp_div_id` varchar(11) default NULL,
+  `ip_status_id` varchar(11) default NULL,
+  `mointor_device_id` varchar(11) default NULL,      
+  `device_category_id` varchar(11) default NULL,      
+  `hostname` varchar(256) default NULL,
+  `host_detail` varchar(512) default NULL,
+  `requester` varchar(512) default NULL,    
+  `request_date` datetime default NULL,
+  `tag` varchar(512) default NULL,
+  `dns_domain` varchar(512) default NULL,
+  `dns_server` varchar(512) default NULL,    
+  `comment` varchar(512) default NULL,    
+  `memo1` varchar(5000) default NULL,
+  `memo2` varchar(5000) default NULL,  
+  `created_id` varchar(255) default NULL,
+  `updated_id` varchar(255) default NULL,
+  `created` datetime default NULL,
+  `modified` datetime default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `ip_div_categories` (
+  `id` int(11) NOT NULL auto_increment,
+  `ip_div_name` varchar(256) default NULL,
+  `created_id` varchar(255) default NULL,
+  `updated_id` varchar(255) default NULL,
+  `created` datetime default NULL,
+  `modified` datetime default NULL,  
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `icmp_div_categories` (
+  `id` int(11) NOT NULL auto_increment,
+  `icmp_div_name` varchar(256) default NULL,
+  `created_id` varchar(255) default NULL,
+  `updated_id` varchar(255) default NULL,
+  `created` datetime default NULL,
+  `modified` datetime default NULL,  
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into icmp_div_categories(icmp_div_name) values('応答あり');
+insert into icmp_div_categories(icmp_div_name) values('応答なし');
+
+CREATE TABLE `ip_status_categories` (
+  `id` int(11) NOT NULL auto_increment,
+  `ip_status_name` varchar(256) default NULL,
+  `created_id` varchar(255) default NULL,
+  `updated_id` varchar(255) default NULL,
+  `created` datetime default NULL,
+  `modified` datetime default NULL,  
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into ip_status_categories(ip_status_name) values('未割当');
+insert into ip_status_categories(ip_status_name) values('稼働中');
+insert into ip_status_categories(ip_status_name) values('予約済');
+insert into ip_status_categories(ip_status_name) values('申請中');
+insert into ip_status_categories(ip_status_name) values('未割当(割当実績あり)');
+
+CREATE TABLE `device_categories` (
+  `id` int(11) NOT NULL auto_increment,
+  `device_name` varchar(256) default NULL,
+  `created_id` varchar(255) default NULL,
+  `updated_id` varchar(255) default NULL,
+  `created` datetime default NULL,
+  `modified` datetime default NULL,  
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into device_categories(device_name) values('サーバ');
+insert into device_categories(device_name) values('ネットワーク機器');
+insert into device_categories(device_name) values('仮想基盤');
+insert into device_categories(device_name) values('ディスク');
+
+CREATE TABLE `monitor_device_categories` (
+  `id` int(11) NOT NULL auto_increment,
+  `monitor_device_name` varchar(256) default NULL,
+  `created_id` varchar(255) default NULL,
+  `updated_id` varchar(255) default NULL,
+  `created` datetime default NULL,
+  `modified` datetime default NULL,    
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into monitor_device_categories(monitor_device_name) values('JP1');
+insert into monitor_device_categories(monitor_device_name) values('NetCrunch');
+
+
+
+-- セグメント情報（segments）の作成
+--
+CREATE TABLE `segments` (
+  `id` int(11) NOT NULL auto_increment,
+  `segment_name` varchar(256) default NULL,
+  `location_id` varchar(11) default NULL,  
+  `segment_ipaddress` varchar(256) default NULL,
+  `segment_subnet` varchar(256) default NULL,  
+  `segment_owner_id` varchar(11) default NULL,
+  `segment_status_id` varchar(11) default NULL,
+  `segment_div_id` varchar(11) default NULL,
+  `segment_source_device` varchar(256) default NULL,    
+  `segment_status_date` datetime default NULL,    
+  `memo` varchar(5000) default NULL,
+  `created_id` varchar(255) default NULL,
+  `updated_id` varchar(255) default NULL,
+  `created` datetime default NULL,
+  `modified` datetime default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+CREATE TABLE `segment_status_categories` (
+  `id` int(11) NOT NULL auto_increment,
+  `segment_status_name` varchar(256) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into segment_status_categories(segment_status_name) values('本番稼働中');
+insert into segment_status_categories(segment_status_name) values('本番稼働前');
+insert into segment_status_categories(segment_status_name) values('廃止');
+
+
+CREATE TABLE `segment_divs` (
+  `id` int(11) NOT NULL auto_increment,
+  `segment_div_name` varchar(256) default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+insert into segment_divs(segment_div_name) values('業務');
+insert into segment_divs(segment_div_name) values('管理(バックアップ）');
+insert into segment_divs(segment_div_name) values('管理（クラスタ)');
+
+
+--
+-- 拠点一覧（locations）の作成
+--
+CREATE TABLE `locations` (
+  `id` int(11) NOT NULL auto_increment,
+  `location_name` varchar(256) default NULL,
+  `created_id` varchar(255) default NULL,
+  `updated_id` varchar(255) default NULL,
+  `created` datetime default NULL,
+  `modified` datetime default NULL,
+  PRIMARY KEY  (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
 --
 -- 変更履歴（changes）の作成
 --
@@ -22,18 +177,20 @@ CREATE TABLE `changes` (
   `id` int(11) NOT NULL auto_increment,
   `change_title` varchar(256) default NULL,
   `change_target` varchar(256) default NULL,
-  `change_target_detail` varchar(256) default NULL,  
+  `change_target_detail` varchar(256) default NULL,
+  `change_target_mng_no` varchar(256) default NULL,    
   `change_target_date` datetime default NULL,  
-  `change_div` varchar(10) default NULL,
-  `change_status` varchar(10) default NULL,
+  `change_div_id` varchar(10) default NULL,
+  `change_status_id` varchar(10) default NULL,
   `change_detail` varchar(1000) default NULL,
-  `change_doc_div` varchar(10) default NULL,
+  `change_doc_id` varchar(10) default NULL,
   `change_doc_detail` varchar(1000) default NULL,
   `operation_doc` varchar(1000) default NULL,
-  `shared_div` varchar(10) default NULL,
-  `service_affect` varchar(10) default NULL,  
+  `shared_div_id` varchar(10) default NULL,
+  `service_affect_id` varchar(10) default NULL,  
   `affect_detail` varchar(1000) default NULL,
-  `shared_detail` varchar(1000) default NULL,  
+  `shared_detail` varchar(1000) default NULL,
+  `tag` varchar(512) default NULL,    
   `memo` varchar(1000) default NULL,    
   `created_id` varchar(255) default NULL,
   `updated_id` varchar(255) default NULL,

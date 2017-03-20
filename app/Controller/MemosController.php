@@ -1,5 +1,6 @@
 <?php
 App::uses('AppController', 'Controller');
+App::uses('TextHelper', 'Text');
 /**
  * Memos Controller
  *
@@ -14,6 +15,7 @@ class MemosController extends AppController {
  */
 	public $name = 'Memos';
 
+	var $helpers = array('Text');	
 /**
  * Use Model
  *
